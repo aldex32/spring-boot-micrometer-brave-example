@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: spring-boot-micrometer-brave-example
+
+management:
+  tracing:
+    sampling:
+      probability: 0.1
+    propagation:
+      # Send only W3C tracing format
+      produce: w3c
+      # Consume both W3C and B3 tracing formats
+      consume: w3c,b3,b3_multi
+    baggage:
+      remote-fields: x-session-id
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},traceId=%X{traceId:-},spanId=%X{spanId:-},sessionId=%X{sessionId:-}]"
